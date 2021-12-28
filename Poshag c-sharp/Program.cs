@@ -2,7 +2,7 @@
 
 Random rand = new Random();
 
-char answer;
+char answer = ' ';
 int mozg = 0;
 
 //windows parameters
@@ -23,7 +23,25 @@ rat.hp = 30;
 rat.attack = 3 + rand.Next(3);
 
 //functions
-
+void Answer()
+{
+    //this function gets user's answer and check warnings
+    try
+    {
+        answer = char.Parse(Console.ReadLine());
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine("?"); //придумать какой-нибудь ответ
+    }
+}
+void ClearScreen()
+{
+    //
+    Console.WriteLine("Нажмите любую клавишу...");
+    Console.ReadKey();
+    Console.Clear();
+}
 
 //Main
 mainMenu();
@@ -42,13 +60,13 @@ void mainMenu()
    \ \__\    \ \_______\____\_\  \ \__\ \__\ \__\ \__\ \_______\
     \|__|     \|_______|\_________\|__|\|__|\|__|\|__|\|_______|
                        \|_________|                             ";
-    Console.Write(mainLogo);
 
     for (; ; )
     {
+        Console.Write(mainLogo);
         Console.WriteLine("\n1 Начать пошаг" + "\n2 Правила" + "\n3 Выход");
 
-        answer = char.Parse(Console.ReadLine());
+        Answer();
 
         if (answer == '1')
         {
@@ -56,6 +74,7 @@ void mainMenu()
         }
         if (answer == '2')
         {
+            Console.Clear();
             Console.WriteLine("Правила таковы:" + "\n1. Все ответы вводяться цифрами" +
                 "\n2. Все ответы только ОДНОЙ цифрой. Если ошиблись - можно стереть и перезаписать" +
                 "\n3. Не пишите буквами" +
@@ -70,6 +89,7 @@ void mainMenu()
 
 void actOne()
 {
+    Console.Clear();
     Console.WriteLine("Ваш корабль сломался во время шторма, вас выбросило на берег, где вы нашли пещеру." +
     "\nОставшись на ночёвку, вы развели костёр и мелкий проход, через который вы забрались в пещеру - завалило." +
     "\nОстается идти только вперед через глубины.");
@@ -78,7 +98,7 @@ void actOne()
     for (; ; )
     {
         Console.WriteLine("\nЧто вы хотите сделать? \n1. Посмотреть на костёр \n2. Идти вперёд.");
-        answer = char.Parse(Console.ReadLine());
+        Answer();
 
         switch (answer)
         {
@@ -99,14 +119,16 @@ void actOne()
 
 void actAttack()
 {
+    Console.Clear();
     int ratHP = 20;
 
-    Console.WriteLine("\nПройдя вперёд вы видите крысу. Люди в этих краях называют их Моргенами. \nВас заметили, придётся драться с Моргеном");
+    Console.WriteLine("\nПройдя вперёд вы видите крысу. Люди в этих краях называют их Моргенами. " +
+        "\nВас заметили, придётся драться с Моргеном");
 
-    for (; ; )
+    for (;;)
     {
         Console.WriteLine("\nЧто вы хотите сделать? \n1. Сделать сильный удар\n2. Ударить слабо.");
-        answer = char.Parse(Console.ReadLine());
+        Answer();
 
         Console.WriteLine($"Ваше здоровье = {player.hp}");
         Console.WriteLine($"Здоровье врага = {rat.hp}");
@@ -119,7 +141,7 @@ void actAttack()
                 break;
             case '1':
                 Console.WriteLine("Вы сделали ОДИН удар и крыса упала замертво. Неудивительно");
-                ratHP -= ratHP;
+                rat.hp -= rat.hp;
                 break;
             case '2':
                 Console.WriteLine("Вы, кажется, погладили крысу. Ей понравилось");
