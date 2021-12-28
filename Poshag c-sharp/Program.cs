@@ -1,24 +1,9 @@
 ﻿using static System.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 Random rand = new Random();
 
-//player stat
 char answer;
 int mozg = 0;
-
-//class stats
-//player
-Demo player = new Demo();
-player.hp = 30;
-player.attack = 3 + rand.Next(3);
-player.fatigue = 100;
-//rat
-Demo rat = new Demo();
-rat.hp = 30;
-rat.attack = 3 + rand.Next(3);
 
 //windows parameters
 WindowHeight = 50;
@@ -26,7 +11,19 @@ WindowWidth = 125;
 SetWindowSize(Console.WindowWidth, Console.WindowHeight);
 CursorVisible = false;
 
+//class stats
+    //player
+Stats player = new Stats();
+player.hp = 30;
+player.attack = 3 + rand.Next(3);
+player.fatigue = 100;
+    //rat
+Stats rat = new Stats();
+rat.hp = 30;
+rat.attack = 3 + rand.Next(3);
+
 //functions
+
 
 //Main
 mainMenu();
@@ -73,9 +70,9 @@ void mainMenu()
 
 void actOne()
 {
-        Console.WriteLine("Ваш корабль сломался во время шторма, вас выбросило на берег, где вы нашли пещеру." +
-        "\nОставшись на ночёвку, вы развели костёр и мелкий проход, через который вы забрались в пещеру - завалило." +
-        "\nОстается идти только вперед через глубины.");
+    Console.WriteLine("Ваш корабль сломался во время шторма, вас выбросило на берег, где вы нашли пещеру." +
+    "\nОставшись на ночёвку, вы развели костёр и мелкий проход, через который вы забрались в пещеру - завалило." +
+    "\nОстается идти только вперед через глубины.");
     Console.WriteLine("\nВы смотрите по сторонам. Сзади вас заваленный проход. По бокам только стены и костёр. Спереди - неизвестность.");
 
     for (; ; )
@@ -145,7 +142,7 @@ void actAttack()
 }
 
 //classes
-class Demo
+class Stats
 {
     public int hp;
     public int attack;
