@@ -1,31 +1,33 @@
-﻿using static System.Console;
+﻿using All_Classes;
+using static System.Console;
 
 Random rand = new Random();
 
 char answer = ' ';
 int mozg = 0;
 
-//windows parameters
-WindowHeight = 50;
-WindowWidth = 125;
-SetWindowSize(Console.WindowWidth, Console.WindowHeight);
-CursorVisible = false;
-
-//class stats
-    //player
-Stats player = new Stats();
+//Объекты и статы
+//player
+CreaturesStats player = new CreaturesStats();
 player.hp = 30;
-player.attack = 3 + rand.Next(3);
+player.attack = 3 + rand.Next(5);
+player.strongAttack = 5 + rand.Next(10);
 player.fatigue = 100;
-    //rat
-Stats rat = new Stats();
+//rat
+CreaturesStats rat = new CreaturesStats();
 rat.hp = 30;
-rat.attack = 3 + rand.Next(3);
+rat.attack = 3;
 
-//functions
+//Оружие
+bool[] isWeaponSearched = new bool[10];
+Weapons torch = new Weapons();
+torch.WeaponName = "Да не торч я";
+torch.WeaponDmg = 9;
+
+//Функции
 void Answer()
 {
-    //this function gets user's answer and check warnings
+    //Эта функция принимает ответ и проверяет на ошибки, чтобы ничего не вылетело
     try
     {
         answer = char.Parse(Console.ReadLine());
@@ -35,21 +37,21 @@ void Answer()
         Console.WriteLine("?"); //придумать какой-нибудь ответ
     }
 }
-void ClearScreen()
+void DefaultConsoleSize()
 {
-    //
-    Console.WriteLine("Нажмите любую клавишу...");
-    Console.ReadKey();
-    Console.Clear();
+    WindowHeight = 50;
+    WindowWidth = 125;
+    SetWindowSize(Console.WindowWidth, Console.WindowHeight);
+    CursorVisible = false;
 }
 
 //Main
 mainMenu();
 actOne();
 actAttack();
-//End Main
+//Конец Main
 
-//Game logic
+//Логика прохождения
 void mainMenu()
 {
     string mainLogo = @" ________  ________  ________  ___  ___  ________  ________     
@@ -64,23 +66,32 @@ void mainMenu()
     for (; ; )
     {
         Console.Write(mainLogo);
-        Console.WriteLine("\n1 Начать пошаг" + "\n2 Правила" + "\n3 Выход");
+        Console.WriteLine("\n1. Начать пошаг" + "\n2. Правила" + "\n3. Сбросить разрешение" + "\ne. Выход");
 
         Answer();
 
+        switch (answer)
+        {
+            case '2':
+                Console.Clear();
+                Console.WriteLine("Правила таковы:" + "\n1. Все ответы вводяться цифрами" +
+                    "\n2. Все ответы только ОДНОЙ цифрой. Если ошиблись - можно стереть и перезаписать" +
+                    "\n3. Не пишите буквами" +
+                    "\n4. Иногда можно)");
+                Console.WriteLine("Нажмите любую клавишу...");
+                Console.ReadKey();
+                break;
+            case '3':
+                DefaultConsoleSize();
+                break;
+            case '4':
+                break;
+        }
         if (answer == '1')
         {
             break;
         }
-        if (answer == '2')
-        {
-            Console.Clear();
-            Console.WriteLine("Правила таковы:" + "\n1. Все ответы вводяться цифрами" +
-                "\n2. Все ответы только ОДНОЙ цифрой. Если ошиблись - можно стереть и перезаписать" +
-                "\n3. Не пишите буквами" +
-                "\n4. Иногда можно)");
-        }
-        if (answer == '3')
+        if (answer == 'e')
         {
             Environment.Exit(0);
         }
@@ -120,12 +131,11 @@ void actOne()
 void actAttack()
 {
     Console.Clear();
-    int ratHP = 20;
 
     Console.WriteLine("\nПройдя вперёд вы видите крысу. Люди в этих краях называют их Моргенами. " +
         "\nВас заметили, придётся драться с Моргеном");
 
-    for (;;)
+    for (; ; )
     {
         Console.WriteLine("\nЧто вы хотите сделать? \n1. Сделать сильный удар\n2. Ударить слабо.");
         Answer();
@@ -161,12 +171,4 @@ void actAttack()
         }
     }
     player.fatigue = 100;
-}
-
-//classes
-class Stats
-{
-    public int hp;
-    public int attack;
-    public int fatigue;
 }
